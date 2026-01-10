@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://daveepr.github.io/Lovcivedomosti/sitemap.xml
