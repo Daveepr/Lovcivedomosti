@@ -700,8 +700,28 @@
         </div>
 
         <!-- Spouštěcí tlačítko -->
-        <button class="help-button" id="openHelp">ℹ️ Nápověda & Licence</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:1em;">
+    <button class="help-button" id="openHelp">ℹ️ Nápověda, Licence a Kontakt</button>
 
+    <button id="megalovciBtn"
+        style="
+            padding:10px 16px;
+            font-size:0.95rem;
+            font-weight:bold;
+            color:#1a1a1a;
+            background:linear-gradient(90deg,#ffd94d,#ffb84d);
+            border:none;
+            border-radius:999px;
+            cursor:pointer;
+            box-shadow:0 0 12px rgba(255,200,50,0.4);
+            transition:transform 0.2s, box-shadow 0.2s;
+        "
+        onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 18px rgba(255,200,50,0.7)';"
+        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 12px rgba(255,200,50,0.4)';"
+    >
+        🏆 Síň Megalovců
+    </button>
+</div>
         <!-- Overlay + modal -->
         <div class="modal-overlay" id="helpOverlay" aria-hidden="true">
             <div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
@@ -721,7 +741,8 @@
                     <button class="tab" id="tab-modes" aria-controls="panel-modes">🎮 Režimy</button>
                     <button class="tab" id="tab-rules" aria-controls="panel-rules">⏱️ Pravidla</button>
                     <button class="tab" id="tab-license" aria-controls="panel-license">📜 Licence</button>
-                </div>
+                    <button class="tab" id="tab-contact" aria-controls="panel-contact">📞 Kontakty & Sdílení</button>
+		</div>
 
                 <!-- Panely -->
                 <div class="tab-panels">
@@ -774,10 +795,110 @@
                             </li>
                         </ul>
                     </section>
-                </div>
+                <section class="tab-panel" id="panel-contact" hidden>
+    <h3>📞 Kontakty & Sdílení</h3>
+
+    <p>
+        Pokud máš nápad, chceš nahlásit chybu nebo poslat zpětnou vazbu, tady nás najdeš:
+    </p>
+
+    <p style="display:flex; align-items:center; gap:10px; margin:8px 0;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
+             alt="Facebook" width="26" height="26" />
+        <a href="https://1url.cz/@LVFB" target="_blank" style="color:#ffcc00;">
+            Lovci vědomostí – Facebook stránka
+        </a>
+    </p>
+
+    <p style="display:flex; align-items:center; gap:10px; margin:8px 0;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png"
+             alt="Email" width="26" height="26" />
+        <span style="color:#ffcc00;">vedomosti.lovci@gmail.com</span>
+    </p>
+
+    <hr style="border-color:#444; margin:1em 0;">
+
+    <h3>📤 Sdílej hru</h3>
+    <p>Chceš vyzvat kamaráda nebo ukázat, co právě hraješ? Vyzkoušej rychlé sdílení.</p>
+
+    <button id="shareBtn" class="help-button" style="margin-top:1em;">
+        📤 Sdílet hru
+    </button>
+
+    <p id="shareFallback" style="display:none; margin-top:0.5em; color:#ccc;">
+        Tvůj prohlížeč nepodporuje rychlé sdílení.<br>
+        Zkopíruj odkaz:  
+        <span style="color:#ffcc00;">https://daveepr.github.io/Lovcivedomosti/</span>
+    </p>
+</section>
+		</div>
             </div>
         </div>
+
+<div id="megalovciModal" 
+     style="
+        display:none;
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,0.6);
+        z-index:2000;
+        justify-content:center;
+        align-items:center;
+     ">
+    <div style="
+        background:#2a2a2a;
+        padding:20px 26px;
+        border-radius:12px;
+        border:1px solid #ffcc00;
+        box-shadow:0 0 20px rgba(255,200,50,0.3);
+        text-align:center;
+        max-width:300px;
+    ">
+        <h3 style="color:#ffcc00; margin-top:0;">🏗️ Již brzy!</h3>
+        <p style="color:#eee; margin-bottom:1em;">
+            Síň Megalovců je ve výstavbě.<br>
+            Připravujeme něco velkého 😄
+        </p>
+        <button onclick="document.getElementById('megalovciModal').style.display='none';"
+                style="
+                    padding:8px 14px;
+                    background:#ffcc00;
+                    border:none;
+                    border-radius:6px;
+                    cursor:pointer;
+                    font-weight:bold;
+                ">
+            Zavřít
+        </button>
+    </div>
+</div>
+
+
 <script>
+document.getElementById("megalovciBtn").addEventListener("click", () => {
+    document.getElementById("megalovciModal").style.display = "flex";
+});
+
+// Sdílení hry – Web Share API
+document.getElementById("shareBtn").addEventListener("click", async () => {
+    const shareData = {
+        title: "Lovci vědomostí",
+        text: "Zkus tuhle vědomostní hru! Trénink, duel s Lovcem i hra hráč vs hráč.",
+        url: "https://daveepr.github.io/Lovcivedomosti/"
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+        } catch (err) {
+            console.log("Sdílení zrušeno:", err);
+        }
+    } else {
+        document.getElementById("shareFallback").style.display = "block";
+    }
+});
+
+
 	setTimeout(() => {
 		document.getElementById("introLogo").classList.remove("active");
 		document.getElementById("introScreen").classList.add("active");
@@ -2331,7 +2452,8 @@ function modRestart() {
             "Lovci vědomostí – fakty jsou vaše nejlepší zbraň.","Lovecká sezona vědomostí se uzavírá. Další kapitola začíná brzy."
         ];
         const creators = "Tvůrci: Daveeho programy & Copilot";
-        const version = "Verze: 9.5.0 • © 2025";
+		const currentYear = new Date().getFullYear();
+		const version = `Verze: 9.5.0 • © 2025–${currentYear}`;
         const chosen = footers[Math.floor(Math.random() * footers.length)];
         document.getElementById("footer").innerHTML = `
     <p>${chosen}</p>
