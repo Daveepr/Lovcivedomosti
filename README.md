@@ -1,6 +1,6 @@
 # Lovci vědomostí
 
-**Lovci vědomostí** je online vědomostní hra inspirovaná soutěží *Na lovu*.  
+**Lovci vědomostí** je online vědomostní hra volně inspirovaná soutěží *Na lovu*.  
 Hráč si může vybrat ze tří režimů:
 
 * **Trénink** – neomezené otázky pro zlepšení znalostí
@@ -19,4 +19,5 @@ https://1url.cz/@lovcivedomosti
 
 Projekt je šířen pod licencí MIT.  
 Hra je volně inspirována televizní soutěží *Na lovu*, ale není s ní nijak spojena.
+
 
