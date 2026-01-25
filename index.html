@@ -674,12 +674,13 @@
 </style>
 </head>
 <body>
-    <div id="introLogo" class="screen active">
-        <h1 class="logo-title">
-            <br />📚<br />LOVCI VĚDOMOSTÍ</h1>
-        <br /><br /><br />
+<div id="introLogo" class="screen active">
+    <div style="text-align:center; margin-bottom:1.5em;">
+        <img id="introRandomImage"
+             alt="Úvodní obrázek"
+             style="max-width:90%; border-radius:12px; animation: fadeZoom 5s ease-in-out forwards;">
     </div>
-    
+</div>    
     <div id="introScreen" class="screen">
         <h1>📚 Lovci vědomostí – Vědomostní duel</h1>
         <div class="moderator-box">
@@ -897,13 +898,26 @@ document.getElementById("shareBtn").addEventListener("click", async () => {
         document.getElementById("shareFallback").style.display = "block";
     }
 });
-
+		setRandomIntroImage();   // ← přidáno
 
 	setTimeout(() => {
 		document.getElementById("introLogo").classList.remove("active");
 		document.getElementById("introScreen").classList.add("active");
 		showRandomIntro()
     }, 5000);
+
+function setRandomIntroImage() {
+    const images = [
+        "./intro1.png",
+        "./intro2.png",
+ 	"./intro3.png",
+ 	"./intro4.png"
+    ];
+
+    const selected = images[Math.floor(Math.random() * images.length)];
+    const img = document.getElementById("introRandomImage");
+    if (img) img.src = selected;
+}
 
     let mode = 0; // 0 = úvod, 1 = návrat
 
